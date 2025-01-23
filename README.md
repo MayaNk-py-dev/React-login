@@ -1,6 +1,6 @@
 # React+Redux Login App
 
- This repository contains the frontend code, which will be integrated with the backend API. The backend team will implement the necessary APIs, and we will integrate them with this frontend.
+## This repository contains the frontend code, which will be integrated with the backend API. The backend team will implement the necessary APIs, and we will integrate them with this frontend.
 
 ## Table of Contents
 - [Installation](#installation)
@@ -20,13 +20,13 @@ Navigate to the project directory:
 
 cd <repo-name>
 
-//Install dependencies: Ensure you have Node.js installed, and then run:
-
+##Install dependencies: Ensure you have Node.js installed, and then run:
 npm install
-//Run the development server: To start the application locally and see it in action:
 
+##Run the development server: To start the application locally and see it in action:
 npm run dev
-//This will start the development server, and you can access the app at http://localhost:3000.
+
+##This will start the development server, and you can access the app at http://localhost:3000.
 
 Usage
 The app currently uses mock data to simulate the backend responses. You can start working on the frontend part by updating the API calls once the backend team has implemented the actual APIs.
@@ -53,7 +53,7 @@ Here’s how you can integrate the backend API once it’s ready:
 npm install axios
 2. Replace the mock data with actual API calls in the relevant components (e.g., Login.jsx).
 
-//javascript
+##javascript
 import axios from 'axios';
 
 const handleSubmit = async (event) => {
@@ -81,4 +81,4 @@ const handleSubmit = async (event) => {
     }
 };
 
-Once the backend is ready, replace the http://localhost:5000/users URL with the actual API endpoint.
+##Once the backend is ready, replace the http://localhost:5000/users URL with the actual API endpoint.
