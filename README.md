@@ -88,8 +88,8 @@ const handleSubmit = async (event) => {
 
 ![Screenshot (228)](https://github.com/user-attachments/assets/74617ff9-cb9c-4c35-9c3f-1db7c10b1e4d)
 ![Screenshot (229)](https://github.com/user-attachments/assets/e3c868b4-431b-40a9-beed-8309ca58834d)
-![Screenshot (231)](https://github.com/user-attachments/assets/432f7d2a-21c6-4807-aa66-6763a9f7b4![Screenshot (224)](https://github.com/user-attachments/assets/39ae8d05-9731-4b58-83f4-284751718b0f)
-74)
+![Screenshot (231)](https://github.com/user-attachments/assets/432f7d2a-21c6-4807-aa66-6763a9f7b4!)
+[Screenshot (224)](https://github.com/user-attachments/assets/39ae8d05-9731-4b58-83f4-284751718b0f)
 
 ##mock json server
 ![Screenshot 2025-01-23 055727](https://github.com/user-attachments/assets/4309d668-544a-4da1-9921-a445fb33a614)
