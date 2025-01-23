@@ -82,3 +82,11 @@ const handleSubmit = async (event) => {
 };
 
 ##Once the backend is ready, replace the http://localhost:5000/users URL with the actual API endpoint.
+![Screenshot (226)](https://github.com/user-attachments/assets/7239c5b3-d5f7-4fda-937b-c9f9ec00b66a)
+![Screenshot (231)](https://github.com/user-attachments/assets/f52c70e2-6fa0-41d8-9257-288f21e1f487)
+![Screenshot (225)](https://github.com/user-attachments/assets/08d97840-100b-49d3-a100-f756a4159a38)
+
+![Screenshot (228)](https://github.com/user-attachments/assets/ead2a93d-c08b-4739-8d44-45a7a72275e2)
+![Screenshot 2025-01-23 055727](https://github.com/user-attachments/assets/06797e32-f476-4d29-809e-742a585fb229)
+
+
