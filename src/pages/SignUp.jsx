@@ -115,8 +115,7 @@ export default function SignUp() {
                 {/* Show success message after successful sign-up */}
                 {success && (
                     <Alert severity="success" sx={{ width: '100%', mb: 2 }}>
-                        Successfully signed up! Redirecting to Login...
-                    </Alert>
+                        Successfully signed up! Redirecting to Login...                    </Alert>
                 )}
 
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
