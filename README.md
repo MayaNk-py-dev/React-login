@@ -82,13 +82,14 @@ const handleSubmit = async (event) => {
 };
 
 ##Once the backend is ready, replace the http://localhost:5000/users URL with the actual API endpoint.
-![Screenshot (226)](https://github.com/user-attachments/assets/7239c5b3-d5f7-4fda-937b-c9f9ec00b66a)
-![Screenshot (231)](https://github.com/user-attachments/assets/f52c70e2-6fa0-41d8-9257-288f21e1f487)
-![Screenshot (225)](https://github.com/user-attachments/assets/08d97840-100b-49d3-a100-f756a4159a38)
 
-![Screenshot (228)](https://github.com/user-attachments/assets/ead2a93d-c08b-4739-8d44-45a7a72275e2)
+
+![Screenshot (225)](https://github.com/user-attachments/assets/1753cfaa-a722-436d-8d25-16dd2c737559)
+
+![Screenshot (228)](https://github.com/user-attachments/assets/74617ff9-cb9c-4c35-9c3f-1db7c10b1e4d)
+![Screenshot (229)](https://github.com/user-attachments/assets/e3c868b4-431b-40a9-beed-8309ca58834d)
+![Screenshot (231)](https://github.com/user-attachments/assets/432f7d2a-21c6-4807-aa66-6763a9f7b4![Screenshot (224)](https://github.com/user-attachments/assets/39ae8d05-9731-4b58-83f4-284751718b0f)
+74)
 
 ##mock json server
-![Screenshot 2025-01-23 055727](https://github.com/user-attachments/assets/06797e32-f476-4d29-809e-742a585fb229)
-
-
+![Screenshot 2025-01-23 055727](https://github.com/user-attachments/assets/4309d668-544a-4da1-9921-a445fb33a614)
