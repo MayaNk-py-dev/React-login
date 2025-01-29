@@ -5,6 +5,12 @@ import Navbar from './components/Navbar';
 import Router from './Router';
 import { createTheme } from '@mui/material/styles';
 
+// Include the Google Fonts link directly in App.jsx
+const jostFontLink = document.createElement('link');
+jostFontLink.rel = 'stylesheet';
+jostFontLink.href = 'https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&display=swap';
+document.head.appendChild(jostFontLink);
+
 // Default light theme
 const lightTheme = createTheme({
   palette: {
@@ -16,9 +22,13 @@ const lightTheme = createTheme({
       main: '#dc004e',
     },
   },
+  typography: {
+    fontFamily: 'Jost, sans-serif', // Apply Jost font globally
+  },
+  
 });
 
-// Default dark theme
+// Default dark theme with gradient background
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
@@ -28,6 +38,12 @@ const darkTheme = createTheme({
     secondary: {
       main: '#f50057',
     },
+  },
+  background: {
+    default: 'linear-gradient(to right, #434343, #000000)', // Dark gradient background
+  },
+  typography: {
+    fontFamily: 'Jost, sans-serif', // Apply Jost font globally
   },
 });
 
@@ -54,11 +70,15 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline /> {/* Normalize styles to be consistent across themes */}
+      <CssBaseline />
+      {/* Apply background gradient for dark mode */}
       <Box
         sx={{
-          backgroundColor: isDarkMode ? 'background.default' : 'white',
-          minHeight: '100vh', // Ensures the background covers the full height
+          minHeight: '100vh',
+          background: isDarkMode
+            ? 'radial-gradient(at 50% 50%, #002952, #090b11)'
+            : 'radial-gradient(at 50% 50%,rgb(255, 255, 255),rgb(255, 255, 255))',
+          padding: { xs: '10px', sm: '20px', md: '30px' }, // Adjust padding based on screen size
         }}
       >
         <BrowserRouter>

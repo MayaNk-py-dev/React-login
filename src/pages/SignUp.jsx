@@ -12,8 +12,13 @@ import Container from '@mui/material/Container';
 import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import GoogleIcon from '@mui/icons-material/Google';
+import FacebookIcon from '@mui/icons-material/Facebook';
 import { useNavigate } from 'react-router-dom';
-import { Alert } from '@mui/material';
+import { Alert, Divider } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
+import { PersonAddAlt } from '@mui/icons-material';
 
 export default function SignUp() {
     const [password, setPassword] = React.useState('');
@@ -22,24 +27,18 @@ export default function SignUp() {
     const [firstName, setFirstName] = React.useState('');
     const [lastName, setLastName] = React.useState('');
     const [email, setEmail] = React.useState('');
-    const [success, setSuccess] = React.useState(false); // For success alert
+    const [success, setSuccess] = React.useState(false);
     const navigate = useNavigate();
 
-    // State for dark mode
-    const [isDarkMode, setIsDarkMode] = React.useState(false);
+    const theme = useTheme(); // Get the current theme
 
-    // Toggle dark mode (you can implement a theme switcher to toggle this)
-    const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
-
-    // Validation regex for email, first name, last name, and password
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    const nameRegex = /^[A-Za-z]+$/;  // Only letters allowed for names
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/; // At least 8 characters, 1 letter, 1 number
+    const nameRegex = /^[A-Za-z]+$/;
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        // Validate input fields
         if (!nameRegex.test(firstName)) {
             setError('First name should contain only letters.');
             return;
@@ -60,7 +59,7 @@ export default function SignUp() {
             return;
         }
 
-        setError(null); // Clear any previous errors
+        setError(null);
 
         const userData = {
             firstName,
@@ -83,14 +82,12 @@ export default function SignUp() {
             }
 
             const result = await response.json();
-            console.log('User signed up:', result);
-            setSuccess(true); // Set success state to true
+            setSuccess(true);
             setTimeout(() => {
-                navigate('/login'); // Redirect to login after 2 seconds
+                navigate('/login');
             }, 2000);
         } catch (error) {
             setError('Error during sign-up. Please try again.');
-            console.error('Error during sign-up:', error);
         }
     };
 
@@ -102,20 +99,18 @@ export default function SignUp() {
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                    <LockOutlinedIcon />
+                <Avatar sx={{ m: 1, bgcolor: 'blue', color:'white' }}>
+                    <PersonAddAlt />
                 </Avatar>
-                <Typography component="h1" variant="h5">
+                <Typography component="h1" variant="h5" sx={{ fontWeight: 'bold' }}>
                     Sign Up
                 </Typography>
 
-                {/* Show error message if there's an error */}
                 {error && <Alert severity="error" sx={{ width: '100%', mb: 2 }}>{error}</Alert>}
-
-                {/* Show success message after successful sign-up */}
                 {success && (
                     <Alert severity="success" sx={{ width: '100%', mb: 2 }}>
-                        Successfully signed up! Redirecting to Login...                    </Alert>
+                        Successfully signed up! Redirecting to Login...
+                    </Alert>
                 )}
 
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
@@ -132,7 +127,9 @@ export default function SignUp() {
                                 value={firstName}
                                 onChange={(e) => setFirstName(e.target.value)}
                                 error={!!error && !nameRegex.test(firstName)}
-                                helperText={error && 'Invalid first name'}
+                                InputProps={{
+                                    style: { borderRadius: '12px' }, // Apply border radius to the input field
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -146,7 +143,9 @@ export default function SignUp() {
                                 value={lastName}
                                 onChange={(e) => setLastName(e.target.value)}
                                 error={!!error && !nameRegex.test(lastName)}
-                                helperText={error && 'Invalid last name'}
+                                InputProps={{
+                                    style: { borderRadius: '12px' }, // Apply border radius to the input field
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -157,10 +156,12 @@ export default function SignUp() {
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
-                                value={email}
+                                value={email}                            
                                 onChange={(e) => setEmail(e.target.value)}
                                 error={!!error && !emailRegex.test(email)}
-                                helperText={error && 'Invalid email address'}
+                                InputProps={{
+                                    style: { borderRadius: '12px' }, // Apply border radius to the input field
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -184,27 +185,65 @@ export default function SignUp() {
                                     ),
                                 }}
                                 error={!!error && !passwordRegex.test(password)}
-                                helperText={error && 'Invalid password (8 characters, 1 letter, 1 number)'}
+                                InputProps={{
+                                    style: { borderRadius: '12px' }, // Apply border radius to the input field
+                                }}
                             />
                         </Grid>
                     </Grid>
-
+                    
                     <Button
                         type="submit"
                         fullWidth
                         variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
+                        sx={{ mt: 3, mb: 2, borderRadius: '12px' }}
                     >
                         Sign Up
                     </Button>
 
-                    <Grid container justifyContent="flex-end">
-                        <Grid item>
-                            <Link href="/login" variant="body2">
-                                Already have an account? Log in
+                    
+                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', my: 2 }}>
+                        <Divider sx={{ width: '45%', marginRight: 2 }} />
+                        <Typography variant="body2">OR</Typography>
+                        <Divider sx={{ width: '45%', marginLeft: 2 }} />
+                    </Box>
+
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                        <Button 
+                            fullWidth
+                            variant="outlined"
+                            onClick={() => alert('Sign up with Google')}
+                            startIcon={<img src="https://img.icons8.com/?size=100&id=17949&format=png&color=000000" alt="Google" width={24} />}
+                            sx={{
+                                borderRadius: '12px',
+                                color: theme.palette.mode === 'dark' ? 'white' : 'black', // Conditional text color
+                            }}
+                        >
+                            Sign up with Google
+                        </Button>
+                        <Button
+                            fullWidth
+                            variant="outlined"
+                            onClick={() => alert('Sign up with Facebook')}
+                            startIcon={<img src="https://img.icons8.com/?size=100&id=118497&format=png&color=000000" alt="Google" width={24} />}
+                            sx={{
+                                borderRadius: '12px',
+                                color: theme.palette.mode === 'dark' ? 'white' : 'black', // Conditional text color
+                            }}
+                        >
+                            Sign up with Facebook
+                        </Button>
+                        <Typography sx={{ textAlign: 'center' }}>
+                            Already have an account?{''}
+                            <Link
+                                href="/login"
+                                variant="body2"
+                                sx={{ alignSelf: 'center' , margin: '10px' }}
+                            >
+                                Sign in
                             </Link>
-                        </Grid>
-                    </Grid>
+                        </Typography>
+                    </Box>
                 </Box>
             </Box>
         </Container>

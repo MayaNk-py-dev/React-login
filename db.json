@@ -108,6 +108,41 @@
       "lastName": "Raj",
       "email": "mayank.raj0811@gmail.com",
       "password": "12345678M"
+    },
+    {
+      "id": "8e47",
+      "firstName": "Mayank",
+      "lastName": "Raj",
+      "email": "mayank.raj0811@gmail.com",
+      "password": "1234567M"
+    },
+    {
+      "id": "11af",
+      "firstName": "Mayank",
+      "lastName": "Raj",
+      "email": "mayank.raj0811@gmail.com",
+      "password": "12345678B"
+    },
+    {
+      "id": "3067",
+      "firstName": "Tony",
+      "lastName": "Stark",
+      "email": "tonystark@gmail.com",
+      "password": "Avengers1"
+    },
+    {
+      "id": "8bbc",
+      "firstName": "Steve",
+      "lastName": "Rogers",
+      "email": "steve@gmail.com",
+      "password": "bucky123"
+    },
+    {
+      "id": "e5e3",
+      "firstName": "NIPUN",
+      "lastName": "RAJ",
+      "email": "NRN@GMAIL.COM",
+      "password": "1234567N"
     }
   ]
 }

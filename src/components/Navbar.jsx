@@ -1,27 +1,18 @@
-    import React, { useState } from 'react';
-    import { Box, Stack, IconButton, Button, useMediaQuery } from '@mui/material';
-    import { Menu as MenuIcon, Close as CloseIcon, Brightness4, Brightness7 } from '@mui/icons-material';
-    import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Box, Stack, IconButton, Button, useMediaQuery } from '@mui/material';
+import { Menu as MenuIcon, Close as CloseIcon, Brightness4, Brightness7 } from '@mui/icons-material';
+import { Link, useNavigate } from 'react-router-dom';
 
-    export default function Navbar({ toggleTheme, isDarkMode }) {
+export default function Navbar({ toggleTheme, isDarkMode }) {
     const [isOpen, setIsOpen] = useState(false);
     const toggleMenu = () => setIsOpen(!isOpen);
-
-    // Media Query for mobile screens
     const isMobile = useMediaQuery('(max-width:600px)');
-
-    // Navigation hook
     const navigate = useNavigate();
-
-    // Check if user is logged in
     const authToken = localStorage.getItem('authToken');
-
     const handleLogout = () => {
-        localStorage.removeItem('authToken'); // Remove the token
-        navigate('/login'); // Redirect to login page
+        localStorage.removeItem('authToken');
+        navigate('/login');
     };
-
-    // Conditionally set NAV_ITEMS based on login status
     const NAV_ITEMS = [
         { label: 'Home', href: '/home', show: !!authToken },
         { label: 'Login', href: '/login', show: !authToken },
@@ -30,132 +21,182 @@
 
     return (
         <Box sx={{ position: 'relative' }}>
-        <Box
-            sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            padding: '8px 16px',
-            borderBottom: 1,
-            borderColor: 'gray.200',
-            backgroundColor: isDarkMode ? 'grey.900' : 'white',
-            paddingRight: 48, // Make space for the theme toggle button
-            }}
-        >
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            {/* Mobile Menu Button */}
-            {isMobile && (
-                <IconButton onClick={toggleMenu} aria-label="Toggle Navigation" sx={{ color: isDarkMode ? 'white' : 'black' }}>
-                {isOpen ? <CloseIcon /> : <MenuIcon />}
-                </IconButton>
-            )}
-
-            {/* Logo */}
-            <Box>
-                <Link
-                to="/"
-                style={{
-                    color: isDarkMode ? 'white' : 'black',
-                    textDecoration: 'none',
-                    fontSize: '24px',
-                    fontWeight: 'bold',
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    padding: '8px 8px',
+                    borderBottom: `1.5px solid ${isDarkMode ? 'gray' : 'black'}`,
+                    backgroundColor: isDarkMode
+                        ? 'rgba(3, 5, 40, 0.47)' 
+                        : 'rgb(255, 255, 255)', 
+                    backdropFilter: 'blur(10px)',
+                    width: '100%',
+                    paddingRight: 4, 
+                    margin: 0, 
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
                 }}
-                >
-                Logo
-                </Link>
-            </Box>
+            >
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    {isMobile && (
+                        <IconButton
+                            onClick={toggleMenu}
+                            aria-label="Toggle Navigation"
+                            sx={{ color: isDarkMode ? 'white' : 'black' }}
+                        >
+                            {isOpen ? <CloseIcon /> : <MenuIcon />}
+                        </IconButton>
+                    )}
+
+                    <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
+                        <img
+                            src={isDarkMode
+                                    ? 'https://img.icons8.com/?size=100&id=wPohyHO_qO1a&format=png&color=ffffff'
+                                    : 'https://img.icons8.com/?size=100&id=wPohyHO_qO1a&format=png&color=000000'}
+                            alt="React Logo"
+                            style={{
+                                width: 26,
+                                height: 26,
+                                marginRight: '8px',
+                            }}
+                        />
+                        {!isMobile && (
+                            <span
+                                style={{
+                                    color: isDarkMode ? 'white' : 'black',
+                                    fontSize: '20px',
+                                    fontWeight: 'bold',
+                                    fontFamily: 'Jost, sans-serif',
+                                }}
+                            >
+                                React App
+                            </span>
+                        )}
+                    </Link>
+                </Box>
+
+                <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: 'auto' }}>
+                    {/* Navbar Items for Larger Screens */}
+                    {!isMobile && (
+                        <Stack direction="row" spacing={4} sx={{ flexGrow: 1, justifyContent: 'flex-end' }}>
+                            {NAV_ITEMS.map(
+                                (navItem) =>
+                                    navItem.show && (
+                                        <Button
+                                            key={navItem.label}
+                                            component={Link}
+                                            to={navItem.href}
+                                            sx={{
+                                                fontSize: 'sm',
+                                                fontWeight: 500,
+                                                color: isDarkMode ? 'gray.300' : 'gray.600',
+                                                '&:hover': {
+                                                    textDecoration: 'none',
+                                                    color: isDarkMode ? 'gray.100' : 'gray.800',
+                                                },
+                                            }}
+                                        >
+                                            {navItem.label}
+                                        </Button>
+                                    )
+                            )}
+                            {authToken && (
+                                <Button
+                                    onClick={handleLogout}
+                                    sx={{
+                                        fontSize: 'sm',
+                                        fontWeight: 500,
+                                        color: isDarkMode ? 'gray.300' : 'gray.600',
+                                        '&:hover': {
+                                            textDecoration: 'none',
+                                            color: isDarkMode ? 'gray.100' : 'gray.800',
+                                        },
+                                    }}
+                                >
+                                    Logout
+                                </Button>
+                            )}
+                        </Stack>
+                    )}
+
+                    {/* Dark/Light Mode Toggle Icon in Navbar */}
+                    
+                        <IconButton
+                            onClick={toggleTheme}
+                            color="inherit"
+                            sx={{
+                                marginLeft: '16px',
+                                color: isDarkMode ? 'white' : 'black',
+                            }}
+                        >
+                            {isDarkMode ? <Brightness7 /> : <Brightness4 />}
+                        </IconButton>
+                    
+                </Box>
             </Box>
 
-            {/* Desktop Navigation */}
-            {!isMobile && (
-            <Stack direction="row" spacing={4}>
-                {NAV_ITEMS.map(
-                (navItem) =>
-                    navItem.show && (
-                    <Box key={navItem.label}>
-                        <Button
+            {/* Mobile Navbar Menu */}
+            {isMobile && isOpen && (
+    <Box
+        sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            position: 'fixed', // Use fixed to make sure it's on top of the page
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,  // This ensures it stretches to the bottom of the screen
+            backgroundColor: isDarkMode ? 'rgba(3, 8, 43, 0.67)' : 'rgba(231, 229, 229, 0.67)',
+            backdropFilter: 'blur(10px)',
+            padding: 0,  // Remove any additional padding here
+            boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)', // Drop shadow for styling
+            overflowY: 'auto', // Prevent content overflow
+            zIndex: 9999,
+            maxHeight: '30vh', // Ensure it stays on top
+        }}
+    >
+        {/* Cross button for closing the dropdown */}
+        <IconButton
+            onClick={toggleMenu}
+            sx={{ alignSelf: 'flex-end', color: isDarkMode ? 'white' : 'black' }}
+        >
+            <CloseIcon />
+        </IconButton>
+
+        {/* Navbar items */}
+        {NAV_ITEMS.map(
+            (navItem) =>
+                navItem.show && (
+                    <Button
+                        key={navItem.label}
                         component={Link}
                         to={navItem.href}
                         sx={{
-                            fontSize: 'sm',
-                            fontWeight: 500,
-                            color: isDarkMode ? 'gray.300' : 'gray.600',
-                            '&:hover': {
-                            textDecoration: 'none',
-                            color: isDarkMode ? 'gray.100' : 'gray.800',
-                            },
+                            padding: 2,
+                            color: isDarkMode ? 'white' : 'black',
+                            textAlign: 'center',
+                            marginBottom: '8px', // Add space between items
                         }}
-                        >
-                        {navItem.label}
-                        </Button>
-                    </Box>
-                    )
-                )}
-                {/* Conditionally render Logout button if the user is logged in */}
-                {authToken && (
-                <Box>
-                    <Button
-                    onClick={handleLogout}
-                    sx={{
-                        fontSize: 'sm',
-                        fontWeight: 500,
-                        color: isDarkMode ? 'gray.300' : 'gray.600',
-                        '&:hover': {
-                        textDecoration: 'none',
-                        color: isDarkMode ? 'gray.100' : 'gray.800',
-                        },
-                    }}
                     >
-                    Logout
-                    </Button>
-                </Box>
-                )}
-            </Stack>
-            )}
-        </Box>
-
-        {/* Mobile Navigation Menu */}
-        {isMobile && isOpen && (
-            <Box
-            sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                padding: 2,
-                backgroundColor: isDarkMode ? 'grey.900' : 'white',
-            }}
-            >
-            {NAV_ITEMS.map(
-                (navItem) =>
-                navItem.show && (
-                    <Button key={navItem.label} component={Link} to={navItem.href} sx={{ padding: 1, color: isDarkMode ? 'white' : 'black' }}>
-                    {navItem.label}
+                        {navItem.label}
                     </Button>
                 )
-            )}
-            {/* Mobile Logout button */}
-            {authToken && (
-                <Button onClick={handleLogout} sx={{ padding: 1, color: isDarkMode ? 'white' : 'black' }}>
-                Logout
-                </Button>
-            )}
-            </Box>
         )}
+        {authToken && (
+            <Button
+                onClick={handleLogout}
+                sx={{ padding: 2, color: isDarkMode ? 'white' : 'black' }}
+            >
+                Logout
+            </Button>
+        )}
+    </Box>
+)}
 
-        {/* Theme toggle button */}
-        <IconButton
-            onClick={toggleTheme}
-            color="inherit"
-            sx={{
-            position: 'absolute',
-            top: '50%',
-            right: 16,
-            transform: 'translateY(-50%)', // Center the button vertically
-            zIndex: 10, // Make sure it's above other content
-            color: isDarkMode ? 'white' : 'black',
-            }}
-        >
-            {isDarkMode ? <Brightness7 /> : <Brightness4 />} {/* Show sun for light, moon for dark */}
-        </IconButton>
-        </Box>
+</Box>
     );
-    }
+}

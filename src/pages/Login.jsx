@@ -11,61 +11,57 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Divider from '@mui/material/Divider';
 import { useNavigate } from 'react-router-dom';
-import { InputAdornment } from '@mui/material'; // Add InputAdornment
-import Visibility from '@mui/icons-material/Visibility'; // Add Visibility icon
-import VisibilityOff from '@mui/icons-material/VisibilityOff'; // Add VisibilityOff icon
+import { InputAdornment } from '@mui/material';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Alert } from '@mui/material';
+import SocialLogin from "../components/SocialLogin";
+import KeyIcon from '@mui/icons-material/Key';
 
 function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(''); // State for error message
-    const [success, setSuccess] = useState(false); // State for success message
-    const [showPassword, setShowPassword] = useState(false); // Manage password visibility
-    const navigate = useNavigate(); // For navigation after successful login
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
 
-    // Handle the login form submission
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        // Validate inputs
         if (!email || !password) {
             setError('Please fill in both fields.');
             return;
         }
 
-        // Simulate API call for login
         try {
-            const response = await fetch('http://localhost:5000/users'); // Assuming users are stored in the db.json file
+            const response = await fetch('http://localhost:5000/users');
             const users = await response.json();
-
-            // Find the user that matches the email and password
             const user = users.find((user) => user.email === email && user.password === password);
-
             if (user) {
-                // Store a token or any user data for authentication (here we're saving a mock token)
-                localStorage.setItem('authToken', 'yourAuthToken'); // Save auth token in localStorage
-
-                // Set success state
+                // Save the full user object (firstName, lastName, email) in localStorage
+                localStorage.setItem('authToken', 'yourAuthToken');
+                localStorage.setItem('authUser', JSON.stringify({
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    email: user.email
+                }));
                 setSuccess(true);
-
-                // Redirect to Home page after successful login
                 setTimeout(() => {
                     navigate('/home');
-                }, 2000); // Redirect after 2 seconds
+                }, 2000);
             } else {
-                setError('Invalid email or password'); // Show error message if credentials don't match
+                setError('Invalid email or password');
             }
         } catch (error) {
-            console.error('Error during login:', error);
             setError('Something went wrong. Please try again later.');
         }
     };
 
-    // Toggle password visibility
     const handleClickShowPassword = () => {
-        setShowPassword(!showPassword); // Toggle password visibility
+        setShowPassword(!showPassword);
     };
 
     return (
@@ -79,12 +75,13 @@ function SignIn() {
                     alignItems: 'center',
                 }}
             >
-                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                    <LockOutlinedIcon />
+                <Avatar sx={{ m: 1, bgcolor: 'blue', color:'white' }}>
+                    <KeyIcon />
                 </Avatar>
-                <Typography component="h1" variant="h5">
+                <Typography component="h1" variant="h5" sx={{ fontWeight: 'bold', fontFamily: 'Jost, sans-serif' }}>
                     Sign in
                 </Typography>
+
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                     <TextField
                         margin="normal"
@@ -97,6 +94,9 @@ function SignIn() {
                         autoFocus
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        InputProps={{
+                            style: { borderRadius: '12px' },
+                        }}
                     />
                     <TextField
                         margin="normal"
@@ -104,12 +104,13 @@ function SignIn() {
                         fullWidth
                         name="password"
                         label="Password"
-                        type={showPassword ? 'text' : 'password'} // Toggle between text and password input type
+                        type={showPassword ? 'text' : 'password'}
                         id="password"
                         autoComplete="current-password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         InputProps={{
+                            style: { borderRadius: '12px' },
                             endAdornment: (
                                 <InputAdornment position="end">
                                     <Button onClick={handleClickShowPassword} edge="end">
@@ -123,39 +124,44 @@ function SignIn() {
                         control={<Checkbox value="remember" color="primary" />}
                         label="Remember me"
                     />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                    >
+
+                    <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2, borderRadius: '12px' }}>
                         Sign In
                     </Button>
 
-                    {/* Show error message if login fails */}
                     {error && (
                         <Typography color="error" variant="body2">
                             {error}
                         </Typography>
                     )}
 
-                    {/* Show success message if login is successful */}
                     {success && (
                         <Alert severity="success" sx={{ width: '100%', mb: 2 }}>
                             Successfully logged in...
                         </Alert>
                     )}
 
-                    <Grid container>
+                    <Divider sx={{ my: 2 }}>OR</Divider>
+
+                    <SocialLogin />
+
+                    <Grid container sx={{ mt: 2 }}>
                         <Grid item xs>
                             <Link href="#" variant="body2">
                                 Forgot password?
                             </Link>
                         </Grid>
                         <Grid item>
-                            <Link href="/signup" variant="body2">
-                                Don't have an account? Sign up
+                        <Typography sx={{ textAlign: 'center' }}>
+                        <span style={{ fontSize: '14px' }}>Don't have an account?</span>
+                            <Link
+                                href="/login"
+                                variant="body2"
+                                sx={{ alignSelf: 'center' , margin: '5px' }}
+                            >
+                                Sign Up
                             </Link>
+                        </Typography>
                         </Grid>
                     </Grid>
                 </Box>
@@ -163,5 +169,4 @@ function SignIn() {
         </Container>
     );
 }
-
 export default SignIn;
